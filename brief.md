@@ -1,4 +1,4 @@
-![](favicon.ico")
+![](doubanpachong.ico)
 ## 豆瓣爬虫 ##
 **豆瓣爬虫是用python构建的一个抓取douban.com网站特定用户所搜藏书籍、影视和音乐的脚本程序。**
 
