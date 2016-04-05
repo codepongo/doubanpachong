@@ -78,7 +78,17 @@ def feed_from_collect(what, who):
                 r = open_url(url, proxy)#.replace('&amp;', '-')
 
             if r == None:
-                return subjects
+                text = '''{
+"title":"",
+"year":"",
+"images":{
+"small":"",
+"large":"",
+"medium":""
+},
+"id":"%s"
+}''' % (id)
+                print '%s is empty.Fuck the damn censorship!' % (id)
             print '[%s] -> [%s]' % (url, tmp)
             with open(tmp, 'wb') as tmp:
                 tmp.write(r)

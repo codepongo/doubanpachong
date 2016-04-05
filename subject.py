@@ -108,3 +108,23 @@ def exist(path):
             arrange.append(json.loads(f.read())['id'])
     return arrange
 
+
+if __name__ == '__main__':
+
+    if len(sys.argv) > 1:
+        identy = sys.argv[1]
+    else:
+        print 'subject id is need!'
+        sys.exit(0)
+
+    if len(sys.argv) > 2:
+        what = sys.argv[2]
+    else:
+        what = 'movie'
+    whats = {
+            'book':{'fmt':'http://api.douban.com/v2/book/%s'}, 
+            'music':{'fmt':'http://api.douban.com/v2/music/%s'}, 
+            'movie':{'fmt':'http://api.douban.com/v2/movie/subject/%s'},
+    }
+    pull(whats[what]['fmt'], '.', what, identy)
+    archive(identy, '.')
