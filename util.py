@@ -4,6 +4,10 @@ import sys
 import requests
 import datetime
 
+import requests.packages.urllib3 as urllib3
+urllib3.disable_warnings()
+
+
 conn = None
 def open_url_and_keep_alive(url, proxies=None):
     global conn
