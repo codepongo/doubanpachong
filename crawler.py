@@ -39,9 +39,9 @@ if __name__ == '__main__':
     util.open_url_and_keep_alive('http://www.douban.com/', settings.proxy)
     users = ['zhuhuotui']
     whats = {
-            'book':{'fmt':'http://api.douban.com/v2/book/%s'}, 
-            'music':{'fmt':'http://api.douban.com/v2/music/%s'}, 
-            'movie':{'fmt':'http://api.douban.com/v2/movie/subject/%s'},
+            'book':{'fmt':'https://api.douban.com/v2/book/%s'}, 
+            'music':{'fmt':'https://api.douban.com/v2/music/%s'}, 
+            'movie':{'fmt':'https://api.douban.com/v2/movie/subject/%s'},
             }
     for u in users:
         for k, v in whats.items():

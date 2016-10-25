@@ -12,6 +12,7 @@ def pull(fmt, folder, what, id):
     txt = os.path.join(path, 'subject.txt')
     if not os.path.isfile(txt):
         url = fmt % (id)
+        print url
         text = open_url(url, proxy)
         if text == '':
             print '%s is 404, Fuck!', url
@@ -43,7 +44,7 @@ def pull(fmt, folder, what, id):
                 if not os.path.isfile(poster):
                     if r['images'][i] != "":
                         with open(poster, 'wb') as f:
-                            f.write(open_url(r['images'][i].replace('\/', '/')))
+                            f.write(open_url(r['images'][i].replace('\/', '/').replace('https', 'http')))
     return path
 
 def archive(source, destination):
@@ -122,9 +123,9 @@ if __name__ == '__main__':
     else:
         what = 'movie'
     whats = {
-            'book':{'fmt':'http://api.douban.com/v2/book/%s'}, 
-            'music':{'fmt':'http://api.douban.com/v2/music/%s'}, 
-            'movie':{'fmt':'http://api.douban.com/v2/movie/subject/%s'},
+            'book':{'fmt':'https://api.douban.com/v2/book/%s'}, 
+            'music':{'fmt':'https://api.douban.com/v2/music/%s'}, 
+            'movie':{'fmt':'https://api.douban.com/v2/movie/subject/%s'},
     }
     pull(whats[what]['fmt'], '.', what, identy)
     archive(identy, '.')
