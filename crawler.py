@@ -4,6 +4,8 @@ import collect
 import subject
 import settings
 import util
+import status
+
 
 def crawler(who, what, fmt):
     if not os.path.isdir(settings.tmp_folder):
@@ -47,4 +49,7 @@ if __name__ == '__main__':
         for k, v in whats.items():
             crawler(u, k, v['fmt'])
     shutil.rmtree(settings.tmp_folder)
+    user_id = '48512229'
+    user = 'zhuhuotui'
+    status.crawler(user_id, user)
 

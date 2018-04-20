@@ -6,7 +6,8 @@ import os
 import base64
 import time
 def feed_from_collect(what, who):
-    collect_url = 'https://%s.douban.com/people/%s/collect?mode=list' % (what, who)
+    domain = 'https://%s.douban.com' % (what)
+    collect_url = '%s/people/%s/collect?mode=list' % (domain, who)
     class Parser(HTMLParser.HTMLParser):
         def __init__(self):
             HTMLParser.HTMLParser.__init__(self)
@@ -97,6 +98,8 @@ def feed_from_collect(what, who):
         p.subjects = []
         if p.next_url != None:
             url = p.next_url
+            if url[0] == '/':
+                url = domain + url
             p.next_url = None
         else:
             return subjects
