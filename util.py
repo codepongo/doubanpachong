@@ -3,6 +3,9 @@ import time
 import sys
 import requests
 import datetime
+import base64
+import os
+import settings
 
 import requests.packages.urllib3 as urllib3
 urllib3.disable_warnings()
@@ -37,7 +40,7 @@ def open_url_and_keep_alive(url, proxies=None):
     if conn == None:
         conn = requests.session()
         conn.mount('https://', HostNameIgnoringAdapter())
-    rep = conn.get(url, proxies=proxies)
+    rep = conn.get(url, proxies=proxies, verify=False)
     if 200 != rep.status_code:
         print rep
         return None
@@ -46,7 +49,7 @@ def open_url_and_keep_alive(url, proxies=None):
 def open_url(url, proxies=None):
     conn = requests.session()
     conn.mount('https://', HostNameIgnoringAdapter())
-    response  = conn.get(url, proxies=proxies)
+    response  = conn.get(url, proxies=proxies, verify=False)
     if 200 != response.status_code:
         print response.status_code
         return None
@@ -67,3 +70,17 @@ def s_to_date(s):
     for i in range(len(t)):
         t[i] = int(t[i])
     return datetime.datetime(*t)
+
+def cache_url(url, directory, force=False):
+    name = base64.b64encode(url) + '.html'
+    path = os.path.join(directory, name)
+    if not force and os.path.isfile(path):
+        print url, '=', path
+    else:
+        print url, '->', path
+        html = open_url(url, settings.proxy)
+        if html == None:
+            html = ''
+        with open(path, 'wb') as f:
+            f.write(html)
+    return path

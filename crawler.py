@@ -11,6 +11,7 @@ def crawler(who, what, fmt):
     if not os.path.isdir(settings.tmp_folder):
         os.mkdir(settings.tmp_folder)
     path = who + os.sep + what
+    print path
     if not os.path.isdir(path):
         os.makedirs(path)
     exists = subject.exist(path)
@@ -28,7 +29,8 @@ def crawler(who, what, fmt):
     for id in ids:
         if not id in exists:
             util.sleep(settings.interval)
-            src = subject.pull(fmt, settings.tmp_folder, what, id)
+            #src = subject.pull(fmt, settings.tmp_folder, what, id)
+            src = subject.pull_by_html(what, settings.tmp_folder, id)
             subject.archive(src, os.path.join(who, what))
             print '[%s] -> [%s]' % (src, os.path.join(who, what))
 
@@ -41,15 +43,15 @@ if __name__ == '__main__':
     util.open_url_and_keep_alive('http://www.douban.com/', settings.proxy)
     users = ['zhuhuotui']
     whats = {
-            'book':{'fmt':'https://api.douban.com/v2/book/%s'}, 
-            'music':{'fmt':'https://api.douban.com/v2/music/%s'}, 
+            #'book':{'fmt':'https://api.douban.com/v2/book/%s'}, 
+            #'music':{'fmt':'https://api.douban.com/v2/music/%s'}, 
             'movie':{'fmt':'https://api.douban.com/v2/movie/subject/%s'},
             }
     for u in users:
         for k, v in whats.items():
             crawler(u, k, v['fmt'])
     shutil.rmtree(settings.tmp_folder)
-    user_id = '48512229'
-    user = 'zhuhuotui'
-    status.crawler(user_id, user)
+    #user_id = '48512229'
+    #user = 'zhuhuotui'
+    #status.crawler(user_id, user)
 
