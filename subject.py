@@ -177,7 +177,7 @@ def archive(source, destination):
     r = json.loads(text)
     prefix = get_prefix(r)
     name = get_name(r)
-    name = name.replace(':', '-').replace('/', '-').replace('\r', '')
+    name = name.replace(':', '-').replace('/', '-').replace('\r', '').replace('*', 'x')
     name = prefix + '_' + name
     destination = os.path.join(destination, name)
 
@@ -220,7 +220,12 @@ def exist(path):
             arrange.append(name)
             continue
         with open(content, 'rb') as f:
-            arrange.append(json.loads(f.read())['id'])
+            text = f.read()
+            try:
+                arrange.append(json.loads(text)['id'])
+            except:
+                arrange.append(text)
+
     return arrange
 
 

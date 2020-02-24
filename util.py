@@ -14,6 +14,9 @@ urllib3.disable_warnings()
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.poolmanager import PoolManager
 
+headers={
+"User-Agent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.146 Safari/537.36"
+}
 
 
 # Never check any hostnames
@@ -40,7 +43,7 @@ def open_url_and_keep_alive(url, proxies=None):
     if conn == None:
         conn = requests.session()
         conn.mount('https://', HostNameIgnoringAdapter())
-    rep = conn.get(url, proxies=proxies, verify=False)
+    rep = conn.get(url, proxies=proxies, verify=False, headers=headers)
     if 200 != rep.status_code:
         print rep
         return None
@@ -49,7 +52,7 @@ def open_url_and_keep_alive(url, proxies=None):
 def open_url(url, proxies=None):
     conn = requests.session()
     conn.mount('https://', HostNameIgnoringAdapter())
-    response  = conn.get(url, proxies=proxies, verify=False)
+    response  = conn.get(url, proxies=proxies, verify=False, headers=headers)
     if 200 != response.status_code:
         print response.status_code
         return None
